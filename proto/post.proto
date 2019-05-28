@@ -31,6 +31,10 @@ message PostsByUserRequest {
   string authorId = 1;
   // Keep them streaming until the call disconnects
   bool watch = 2;
+  // Only posts newer than the given id:
+  string after = 3;
+  // Only posts from (inclusive) a date onwards:
+  google.protobuf.Timestamp since = 4;
 }
 
 message ThreadRequest {
@@ -39,6 +43,10 @@ message ThreadRequest {
   bool shallow = 2;
   // Keep them streaming until the call disconnects
   bool watch = 3;
+  // Only posts newer than the given id:
+  string after = 4;
+  // Only posts from (inclusive) a date onwards:
+  google.protobuf.Timestamp since = 5;
 }
 
 service Posts {
