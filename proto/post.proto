@@ -16,3 +16,33 @@ message Post {
   google.protobuf.Timestamp updated = 9;
   bool retracted = 10;
 }
+
+message CreatePostRequest {
+  string text = 2;
+  // TODO this is temporary until we have proper auth
+  string authorDisplayName = 4;
+  //string conversationId = 5;
+  // TODO this is temporary until we have actual conversations
+  string conversationTitle = 6;
+  string inReplyTo = 7;
+}
+
+message PostsByUserRequest {
+  string authorId = 1;
+  // Keep them streaming until the call disconnects
+  bool watch = 2;
+}
+
+message RepliesRequest {
+  string postId = 1;
+  // Direct replies only
+  bool shallow = 2;
+  // Keep them streaming until the call disconnects
+  bool watch = 3;
+}
+
+service Posts {
+  rpc Create (CreatePostRequest) returns (Post);
+  rpc PostsByUser (PostsByUserRequest) returns (stream Post);
+  rpc Replies (RepliesRequest) returns (stream Post);
+}
