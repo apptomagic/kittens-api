@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package kittens.post;
+
+import "google/protobuf/timestamp.proto";
+
+message Post {
+  string id = 1;
+  string text = 2;
+  string authorId = 3;
+  string authorDisplayName = 4;
+  string conversationId = 5;
+  string conversationTitle = 6;
+  string inReplyTo = 7;
+  google.protobuf.Timestamp created = 8;
+  google.protobuf.Timestamp updated = 9;
+  bool retracted = 10;
+}
