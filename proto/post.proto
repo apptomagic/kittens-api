@@ -33,7 +33,7 @@ message PostsByUserRequest {
   bool watch = 2;
 }
 
-message RepliesRequest {
+message ThreadRequest {
   string postId = 1;
   // Direct replies only
   bool shallow = 2;
@@ -42,7 +42,10 @@ message RepliesRequest {
 }
 
 service Posts {
+  // Create a new post
   rpc Create (CreatePostRequest) returns (Post);
+  // All posts by a given user
   rpc PostsByUser (PostsByUserRequest) returns (stream Post);
-  rpc Replies (RepliesRequest) returns (stream Post);
+  // A post and all its replies
+  rpc Thread (ThreadRequest) returns (stream Post);
 }
