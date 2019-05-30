@@ -1,0 +1,137 @@
+description: >
+  Post: a piece of text (and possible attachments) posted by an user, possibly
+  in reply to another Post. Always part of exactly one Conversation, may be the
+  Conversation's starting point (OP) or a reply.
+
+specs:
+- feature: create posts
+  scenarios:
+  - name: data is required
+    when:
+    - I make a new post with no title and which is not a reply
+    then:
+    - It fails, telling me I must provide more data
+  - name: Anonymous posting
+    notes: >
+      This scenario is specific to the current prototype, and will not be part
+      of the actual product later, as we plan to require login before posting.
+      However, for now there's no auth, so we just allow posters to identify
+      themselves free-form.
+    when:
+    - I make a new post and don't provide an author name
+    then:
+    - My new post is created
+    - The author display name is "Anonymous Coward"
+  - name: Identified posting
+    notes: >
+      Since there's no auth yet, this is currently faked by the test suite by
+      looking up the user in the context and passing in the correct
+      authorDisplayName.
+    given:
+    - I'm authenticated as test-user-2-bob
+    when:
+    - I make a new post
+    then:
+    - My new post is created
+    - The author display name is "Bob Yorankel"
+- feature: fetch posts
+  contexts:
+  - simple conversation
+  scenarios:
+  - name: fetch user posts
+    when:
+    - I fetch all posts by test-user-1-justin
+    then:
+    - I get 3 posts
+  - name: fetch thread
+    when:
+    - I fetch the thread from test-post-1
+    then:
+    - I get 7 posts
+  - name: fetch partial thread
+    when:
+    - I fetch the thread from test-post-1 after test-post-3
+    then:
+    - I get 4 posts
+  - name: fetch by date
+    when:
+    - I fetch the thread from test-post-1 since 2019-05-30T16:11:50
+    then:
+    - I get 3 posts
+
+contexts:
+  - name: simple conversation
+    data:
+      users:
+      - id: test-user-1-justin
+        displayName: Justin Test
+      - id: test-user-2-bob
+        displayName: Bob Yorankel
+      - id: test-user-3-faye
+        displayName: Faye Keyoosa
+      - id: test-user-4-anne
+        displayName: Anne Onymous
+      conversations:
+      - id: test-convo-1-foo
+        title: Foo
+        op: test-post-1
+        topics:
+        - testing
+        - foo
+      posts:
+      - id: test-post-1
+        conversation: test-convo-1-foo
+        text: foo
+        authorId: test-user-1-justin
+        authorDisplayName: Justin Test
+        conversationTitle: test
+        created: '2019-05-30T16:11:50.223143Z'
+        updated: '2019-05-30T16:11:50.223143Z'
+      - id: test-post-2
+        conversation: test-convo-1-foo
+        text: bar
+        authorId: test-user-2-bob
+        authorDisplayName: Bob Yorankel
+        inReplyTo: test-post-1
+        created: '2019-05-30T16:11:50.308663Z'
+        updated: '2019-05-30T16:11:50.308663Z'
+      - id: test-post-3
+        conversation: test-convo-1-foo
+        text: piyo
+        authorId: test-user-3-faye
+        authorDisplayName: Faye Keyoosa
+        inReplyTo: test-post-1
+        created: '2019-05-30T16:11:50.376519Z'
+        updated: '2019-05-30T16:11:50.376519Z'
+      - id: test-post-4
+        conversation: test-convo-1-foo
+        text: quux
+        authorId: test-user-1-justin
+        authorDisplayName: Justin Test
+        inReplyTo: test-post-2
+        created: '2019-05-30T16:11:50.443389Z'
+        updated: '2019-05-30T16:11:50.443389Z'
+      - id: test-post-5
+        conversation: test-convo-1-foo
+        text: hoge
+        authorId: test-user-4-anne
+        authorDisplayName: Anne Onymous
+        inReplyTo: test-post-1
+        created: '2019-05-30T16:11:50.612543Z'
+        updated: '2019-05-30T16:11:50.612543Z'
+      - id: test-post-6
+        conversation: test-convo-1-foo
+        text: fnord
+        authorId: test-user-1-justin
+        authorDisplayName: Justin Test
+        inReplyTo: test-post-5
+        created: '2019-05-30T16:11:50.686769Z'
+        updated: '2019-05-30T16:11:50.686769Z'
+      - id: test-post-7
+        conversation: test-convo-1-foo
+        text: thing
+        authorId: test-user-2-bob
+        authorDisplayName: Bob Yorankel
+        inReplyTo: test-post-5
+        created: '2019-05-30T16:11:50.827983Z'
+        updated: '2019-05-30T16:11:50.827983Z'

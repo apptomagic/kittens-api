@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Note this tests the current implementation of the prototype back-end, and
+# not necessarily the final/desired API.
+
 echo "This will fail (not enough data)"
 grpcurl -plaintext -d '{"text": "foo"}' localhost:50051 kittens.post.Posts/Create
 
@@ -11,7 +15,7 @@ REPLY=$(grpcurl -plaintext -d '{"text": "bar", "inReplyTo": "'"${OP}"'", "author
 echo "Created reply: ${REPLY}"
 
 echo "Create a few more posts in the conversation"
-REPLY2=$(grpcurl -plaintext -d '{"text": "bar", "inReplyTo": "'"${OP}"'", "authorDisplayName": "Jane"}' localhost:50051 kittens.post.Posts/Create | jq -r .id)
+REPLY2=$(grpcurl -plaintext -d '{"text": "bar", "inReplyTo": "'"${OP}"'", "authorDisplayName": "Faye"}' localhost:50051 kittens.post.Posts/Create | jq -r .id)
 grpcurl -plaintext -d '{"text": "bar", "inReplyTo": "'"${REPLY}"'", "authorDisplayName": "Anonymous Coward"}' localhost:50051 kittens.post.Posts/Create
 ANNE=$(grpcurl -plaintext -d '{"text": "bar", "inReplyTo": "'"${OP}"'", "authorDisplayName": "Anne Onymous"}' localhost:50051 kittens.post.Posts/Create | jq -r .created)
 grpcurl -plaintext -d '{"text": "bar", "inReplyTo": "'"${REPLY2}"'", "authorDisplayName": "Anonymous Coward"}' localhost:50051 kittens.post.Posts/Create
@@ -23,7 +27,7 @@ grpcurl -plaintext -d '{"authorId": "Anonymous Coward"}' localhost:50051 kittens
 echo "Get all posts in our conversation"
 grpcurl -plaintext -d '{"postId": "'"${OP}"'"}' localhost:50051 kittens.post.Posts/Thread
 
-echo "Get all posts in our conversation after Jane's"
+echo "Get all posts in our conversation after Faye's"
 grpcurl -plaintext -d '{"postId": "'"${OP}"'", "after": "'"${REPLY2}"'"}' localhost:50051 kittens.post.Posts/Thread
 
 echo "Get all posts in our conversation since Anne's (${ANNE})"
