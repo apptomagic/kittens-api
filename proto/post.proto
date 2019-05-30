@@ -3,6 +3,7 @@ syntax = "proto3";
 package kittens.post;
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 message Post {
   string id = 1;
@@ -49,6 +50,18 @@ message ThreadRequest {
   google.protobuf.Timestamp since = 5;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// admin/testing APIs
+// these should be controlled with strict ACLs
+
+message SetupContextRequest {
+  string name = 1;
+  repeated Post posts = 2;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// service definition
+
 service Posts {
   // Create a new post
   rpc Create (CreatePostRequest) returns (Post);
@@ -56,4 +69,7 @@ service Posts {
   rpc PostsByUser (PostsByUserRequest) returns (stream Post);
   // A post and all its replies
   rpc Thread (ThreadRequest) returns (stream Post);
+  ////////////////////////////////////////////////////////////////////////
+  // admin/testing
+  rpc SetupContext (SetupContextRequest) returns (google.protobuf.Empty);
 }

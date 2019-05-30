@@ -85,40 +85,40 @@ contexts:
         authorId: test-user-1-justin
         authorDisplayName: Justin Test
         conversationTitle: test
-        created: '2019-05-30T16:11:50.223143Z'
-        updated: '2019-05-30T16:11:50.223143Z'
+        created: '2019-05-30T16:01:50.223143Z'
+        updated: '2019-05-30T16:01:50.223143Z'
       - id: test-post-2
         conversation: test-convo-1-foo
         text: bar
         authorId: test-user-2-bob
         authorDisplayName: Bob Yorankel
         inReplyTo: test-post-1
-        created: '2019-05-30T16:11:50.308663Z'
-        updated: '2019-05-30T16:11:50.308663Z'
+        created: '2019-05-30T16:03:12.308663Z'
+        updated: '2019-05-30T16:03:12.308663Z'
       - id: test-post-3
         conversation: test-convo-1-foo
         text: piyo
         authorId: test-user-3-faye
         authorDisplayName: Faye Keyoosa
         inReplyTo: test-post-1
-        created: '2019-05-30T16:11:50.376519Z'
-        updated: '2019-05-30T16:11:50.376519Z'
+        created: '2019-05-30T16:03:45.376519Z'
+        updated: '2019-05-30T16:03:45.376519Z'
       - id: test-post-4
         conversation: test-convo-1-foo
         text: quux
         authorId: test-user-1-justin
         authorDisplayName: Justin Test
         inReplyTo: test-post-2
-        created: '2019-05-30T16:11:50.443389Z'
-        updated: '2019-05-30T16:11:50.443389Z'
+        created: '2019-05-30T16:08:08.443389Z'
+        updated: '2019-05-30T16:08:08.443389Z'
       - id: test-post-5
         conversation: test-convo-1-foo
         text: hoge
         authorId: test-user-4-anne
         authorDisplayName: Anne Onymous
         inReplyTo: test-post-1
-        created: '2019-05-30T16:11:50.612543Z'
-        updated: '2019-05-30T16:11:50.612543Z'
+        created: '2019-05-30T16:09:09.612543Z'
+        updated: '2019-05-30T16:09:09.612543Z'
       - id: test-post-6
         conversation: test-convo-1-foo
         text: fnord
@@ -133,5 +133,5 @@ contexts:
         authorId: test-user-2-bob
         authorDisplayName: Bob Yorankel
         inReplyTo: test-post-5
-        created: '2019-05-30T16:11:50.827983Z'
-        updated: '2019-05-30T16:11:50.827983Z'
+        created: '2019-05-30T16:11:52.827983Z'
+        updated: '2019-05-30T16:11:52.827983Z'
