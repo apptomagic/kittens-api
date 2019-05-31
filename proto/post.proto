@@ -19,13 +19,12 @@ message Post {
 }
 
 message CreatePostRequest {
-  string text = 2;
+  string text = 1;
+  // string authorId = 2;
   // TODO this is temporary until we have proper auth
-  string authorDisplayName = 4;
-  //string conversationId = 5;
-  // TODO this is temporary until we have actual conversations
-  string conversationTitle = 6;
-  string inReplyTo = 7;
+  string authorDisplayName = 992;
+  string conversationId = 3;
+  string inReplyTo = 4;
 }
 
 message PostsByUserRequest {

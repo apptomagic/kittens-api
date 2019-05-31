@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package kittens.conversation;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "post.proto";
+
+message Topic {
+  string id = 1;
+  string name = 2;
+}
+
+message Conversation {
+  string id = 1;
+  string title = 2;
+  string opId = 3;
+  repeated string topics = 4;
+}
+
+message CreateConversationRequest {
+  string id = 1;
+  string title = 2;
+  // string authorId = 3;
+  // TODO this is temporary until we have proper auth
+  string authorDisplayName = 993;
+  repeated string topics = 4;
+  string text = 5;
+}
+
+// Actually just forwards to Posts.Thread(op, shallow=false)
+message ThreadRequest {
+  string conversationId = 1;
+  // Keep them streaming until the call disconnects
+  bool watch = 2;
+  // Only posts newer than the given id:
+  string after = 3;
+  // Only posts from (inclusive) a date onwards:
+  google.protobuf.Timestamp since = 4;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// admin/testing APIs
+// these should be controlled with strict ACLs
+
+message SetupContextRequest {
+  string name = 1;
+  repeated Conversation conversations = 2;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// service definition
+
+service Conversations {
+  // Create a new conversation
+  rpc Create (CreateConversationRequest) returns (Conversation);
+  // All posts in the conversation
+  rpc Thread (ThreadRequest) returns (stream kittens.post.Post);
+  ////////////////////////////////////////////////////////////////////////
+  // admin/testing
+  rpc SetupContext (SetupContextRequest) returns (google.protobuf.Empty);
+}
