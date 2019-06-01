@@ -1,0 +1,96 @@
+contexts:
+  - name: many conversations
+    data:
+      users:
+      - id: test-user-1-justin
+        displayName: Justin Test
+      - id: test-user-2-bob
+        displayName: Bob Yorankel
+      - id: test-user-3-faye
+        displayName: Faye Keyoosa
+      - id: test-user-4-anne
+        displayName: Anne Onymous
+      conversations:
+      - id: test-convo-1-foo
+        title: Foo
+        opId: test-post-1
+        topics:
+        - sandbox
+        - introductions
+      - id: test-convo-2-bar
+        title: Bar
+        opId: test-post-2
+        topics:
+        - sandbox
+        - chat
+      - id: test-convo-3-piyo
+        title: Piyo
+        opId: test-post-3
+        topics:
+        - sandbox
+        - help
+      - id: test-convo-4-quux
+        title: Quux
+        opId: test-post-4
+        topics:
+        - sandbox
+        - introductions
+      - id: test-convo-5-hoge
+        title: Hoge
+        opId: test-post-5
+        topics:
+        - sandbox
+        - web
+      posts:
+      - id: test-post-1
+        text: foo
+        authorId: test-user-1-justin
+        authorDisplayName: Justin Test
+        conversationId: test-convo-1-foo
+        created: '2019-05-30T16:01:50.223143Z'
+        updated: '2019-05-30T16:01:50.223143Z'
+      - id: test-post-2
+        conversation: test-convo-2-bar
+        text: bar
+        authorId: test-user-2-bob
+        authorDisplayName: Bob Yorankel
+        conversationId: test-convo-2-bar
+        created: '2019-05-30T16:03:12.308663Z'
+        updated: '2019-05-30T16:03:12.308663Z'
+      - id: test-post-3
+        text: piyo
+        authorId: test-user-3-faye
+        authorDisplayName: Faye Keyoosa
+        conversationId: test-convo-3-piyo
+        created: '2019-05-30T16:03:45.376519Z'
+        updated: '2019-05-30T16:03:45.376519Z'
+      - id: test-post-4
+        text: quux
+        authorId: test-user-1-justin
+        authorDisplayName: Justin Test
+        conversationId: test-convo-4-quux
+        created: '2019-05-30T16:08:08.443389Z'
+        updated: '2019-05-30T16:08:08.443389Z'
+      - id: test-post-5
+        text: hoge
+        authorId: test-user-4-anne
+        authorDisplayName: Anne Onymous
+        conversationId: test-convo-5-hoge
+        created: '2019-05-30T16:09:09.612543Z'
+        updated: '2019-05-30T16:09:09.612543Z'
+      - id: test-post-6
+        text: fnord
+        authorId: test-user-1-justin
+        authorDisplayName: Justin Test
+        conversationId: test-convo-1-foo
+        inReplyTo: test-post-1
+        created: '2019-05-30T16:11:50.686769Z'
+        updated: '2019-05-30T16:11:50.686769Z'
+      - id: test-post-7
+        text: thing
+        authorId: test-user-2-bob
+        authorDisplayName: Bob Yorankel
+        conversationId: test-convo-1-foo
+        inReplyTo: test-post-6
+        created: '2019-05-30T16:11:52.827983Z'
+        updated: '2019-05-30T16:11:52.827983Z'

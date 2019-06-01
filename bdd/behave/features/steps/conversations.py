@@ -61,3 +61,35 @@ def step_impl(context):
     context.stubs.conversations.Create,
     req,
   )
+
+
+@when(u'I fetch conversations in topic "{name}"')
+def step_impl(context, name):
+  context.stubs.try_call(
+    context.stubs.conversations.ByTopic,
+    ConversationsByTopicRequest(topic=name),
+  )
+
+
+@when(u'I fetch conversations in topic "{name}" after {conversationId}')
+def step_impl(context, name, conversationId):
+  context.stubs.try_call(
+    context.stubs.conversations.ByTopic,
+    ConversationsByTopicRequest(topic=name, after=conversationId),
+  )
+
+
+@when(u'I fetch conversations in topic "{name}" since {timestamp}')
+def step_impl(context, name, timestamp):
+  req = ConversationsByTopicRequest(topic=name)
+  req.since.FromJsonString(timestamp)
+  context.stubs.try_call(
+    context.stubs.conversations.ByTopic,
+    req,
+  )
+
+
+@then(u'I get {num:d} conversations')
+def step_impl(context, num):
+  conversations = list(context.stubs.call_res)
+  assert len(conversations) == num, 'got {} conversations'.format(len(conversations))

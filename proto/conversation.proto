@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package kittens.conversation;
 
+import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 import "post.proto";
 
@@ -26,9 +27,19 @@ message CreateConversationRequest {
   string text = 4;
 }
 
-message CreateConversationResponse {
+message ConversationAndOP {
   Conversation conversation = 1;
   kittens.post.Post op = 2;
+}
+
+message ConversationsByTopicRequest {
+  string topic = 1;
+  // Keep them streaming until the call disconnects
+  bool watch = 2;
+  // Only posts newer than the given id:
+  string after = 3;
+  // Only posts from (inclusive) a date onwards:
+  google.protobuf.Timestamp since = 4;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -45,7 +56,8 @@ message SetupContextRequest {
 
 service Conversations {
   // Create a new conversation
-  rpc Create (CreateConversationRequest) returns (CreateConversationResponse);
+  rpc Create (CreateConversationRequest) returns (ConversationAndOP);
+  rpc ByTopic (ConversationsByTopicRequest) returns (stream ConversationAndOP);
   ////////////////////////////////////////////////////////////////////////
   // admin/testing
   rpc SetupContext (SetupContextRequest) returns (google.protobuf.Empty);

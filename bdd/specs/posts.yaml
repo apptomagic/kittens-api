@@ -76,7 +76,7 @@ contexts:
         - chat
       posts:
       - id: test-post-1
-        conversation: test-convo-1-foo
+
         text: foo
         authorId: test-user-1-justin
         authorDisplayName: Justin Test
@@ -103,7 +103,6 @@ contexts:
         - chat
       posts:
       - id: test-post-1
-        conversation: test-convo-1-foo
         text: foo
         authorId: test-user-1-justin
         authorDisplayName: Justin Test
@@ -111,7 +110,6 @@ contexts:
         created: '2019-05-30T16:01:50.223143Z'
         updated: '2019-05-30T16:01:50.223143Z'
       - id: test-post-2
-        conversation: test-convo-1-foo
         text: bar
         authorId: test-user-2-bob
         authorDisplayName: Bob Yorankel
@@ -120,7 +118,6 @@ contexts:
         created: '2019-05-30T16:03:12.308663Z'
         updated: '2019-05-30T16:03:12.308663Z'
       - id: test-post-3
-        conversation: test-convo-1-foo
         text: piyo
         authorId: test-user-3-faye
         authorDisplayName: Faye Keyoosa
@@ -129,7 +126,6 @@ contexts:
         created: '2019-05-30T16:03:45.376519Z'
         updated: '2019-05-30T16:03:45.376519Z'
       - id: test-post-4
-        conversation: test-convo-1-foo
         text: quux
         authorId: test-user-1-justin
         authorDisplayName: Justin Test
@@ -138,7 +134,6 @@ contexts:
         created: '2019-05-30T16:08:08.443389Z'
         updated: '2019-05-30T16:08:08.443389Z'
       - id: test-post-5
-        conversation: test-convo-1-foo
         text: hoge
         authorId: test-user-4-anne
         authorDisplayName: Anne Onymous
@@ -147,7 +142,6 @@ contexts:
         created: '2019-05-30T16:09:09.612543Z'
         updated: '2019-05-30T16:09:09.612543Z'
       - id: test-post-6
-        conversation: test-convo-1-foo
         text: fnord
         authorId: test-user-1-justin
         authorDisplayName: Justin Test
@@ -156,7 +150,6 @@ contexts:
         created: '2019-05-30T16:11:50.686769Z'
         updated: '2019-05-30T16:11:50.686769Z'
       - id: test-post-7
-        conversation: test-convo-1-foo
         text: thing
         authorId: test-user-2-bob
         authorDisplayName: Bob Yorankel
