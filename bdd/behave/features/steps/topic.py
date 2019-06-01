@@ -23,5 +23,5 @@ def step_impl(context, name):
 
 @then(u'I get {num:d} topics')
 def step_impl(context, num):
-  topics = list(context.stubs.call_res)
+  topics = context.stubs.call_res.topics
   assert len(topics) == num, 'got {} topics'.format(len(topics))

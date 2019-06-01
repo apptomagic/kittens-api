@@ -29,7 +29,7 @@ Feature: browse topics
 
   Scenario: get all topics
     When I fetch all topics
-    Then I get 13 topics
+    Then I get 12 topics
   Scenario: get related
     When I fetch topics related to "documentation"
     Then I get 3 topics
