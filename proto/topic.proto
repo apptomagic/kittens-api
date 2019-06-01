@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package kittens.topic;
+
+import "google/protobuf/empty.proto";
+
+message TopicList {
+  repeated string topics = 1;
+}
+
+message TopicRequest {
+  string name = 1;
+}
+
+service Topics {
+  rpc AllTopics (google.protobuf.Empty) returns (TopicList);
+  rpc Related (TopicRequest) returns (TopicList);
+}
