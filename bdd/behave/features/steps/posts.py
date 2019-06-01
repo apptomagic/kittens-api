@@ -5,18 +5,12 @@ from client.post_pb2 import *
 
 @when(u'I make a post without a conversation')
 def step_impl(context):
+  context.try_type = 'Posts'
   context.stubs.try_call(
     context.stubs.posts.Create,
     CreatePostRequest(text = 'foo'),
     catch_error = True,
   )
-
-
-@then(u'It fails, telling me I must provide more data')
-def step_impl(context):
-  assert hasattr(context.stubs, 'call_exc')
-  assert context.stubs.call_exc.code() == grpc.StatusCode.INVALID_ARGUMENT
-  assert context.stubs.call_exc.details() == "Posts need conversationId"
 
 
 @when(u'I make a new post and don\'t provide an author name')
@@ -32,37 +26,30 @@ def step_impl(context):
 
 @then(u'My new post is created')
 def step_impl(context):
-  assert isinstance(context.stubs.call_res, Post)
+  if context.try_type == 'Posts':
+    assert isinstance(context.stubs.call_res, Post)
+    context.new_post = context.stubs.call_res
+  elif context.try_type == 'Conversations':
+    assert hasattr(context.stubs.call_res, 'op')
+    assert isinstance(context.stubs.call_res.op, Post)
+    context.new_post = context.stubs.call_res.op
 
 
 @then(u'The author display name is "{authorDisplayName}"')
 def step_impl(context, authorDisplayName):
-  assert context.stubs.call_res.authorDisplayName == authorDisplayName
-
-
-@given(u'I\'m authenticated as {userId}')
-def step_impl(context, userId):
-  for ctx in context.active_contexts[-1]:
-    try:
-      users = ctx['data']['users']
-    except KeyError:
-      continue
-    for user in users:
-      if user['id'] == userId:
-        context.auth_user = user
-        return
-  assert False, 'User {} not found in provided contexts'.format(userId)
+  assert context.new_post.authorDisplayName == authorDisplayName
 
 
 @when(u'I make a new post')
 def step_impl(context):
-  context.stubs.try_call(
-    context.stubs.posts.Create,
-    CreatePostRequest(
-      text = 'foo',
-      authorDisplayName = context.auth_user['displayName'],
-      inReplyTo = 'test-post-1',
-    ))
+  req = CreatePostRequest(
+    text = 'foo',
+    inReplyTo = 'test-post-1',
+  )
+  if getattr(context, 'auth_user', None):
+    req.authorDisplayName = context.auth_user['displayName']
+  context.try_type = 'Posts'
+  context.stubs.try_call(context.stubs.posts.Create, req)
 
 
 @when(u'I fetch all posts by {userId}')

@@ -19,13 +19,17 @@ message Conversation {
 }
 
 message CreateConversationRequest {
-  string id = 1;
-  string title = 2;
-  // string authorId = 3;
+  string title = 1;
+  // string authorId = 2;
   // TODO this is temporary until we have proper auth
-  string authorDisplayName = 993;
-  repeated string topics = 4;
-  string text = 5;
+  string authorDisplayName = 902;
+  repeated string topics = 3;
+  string text = 4;
+}
+
+message CreateConversationResponse {
+  Conversation conversation = 1;
+  kittens.post.Post op = 2;
 }
 
 // Actually just forwards to Posts.Thread(op, shallow=false)
@@ -53,7 +57,7 @@ message SetupContextRequest {
 
 service Conversations {
   // Create a new conversation
-  rpc Create (CreateConversationRequest) returns (Conversation);
+  rpc Create (CreateConversationRequest) returns (CreateConversationResponse);
   // All posts in the conversation
   rpc Thread (ThreadRequest) returns (stream kittens.post.Post);
   ////////////////////////////////////////////////////////////////////////

@@ -1,8 +1,16 @@
-Feature: Create posts
+Feature: Create conversations
 
-  Scenario: data is required
-    When I make a post without a conversation
-    Then It fails, telling me I must provide more data
+  Scenario: title is required
+    When I start a conversation without title
+    Then It fails, telling me I must provide a title
+
+  Scenario: text is required
+    When I start a conversation without text
+    Then It fails, telling me I must provide text
+
+  Scenario: topics required
+    When I start a conversation without topics
+    Then It fails, telling me I must provide topics
 
   @use-contexts.minimal
   Scenario: Anonymous posting
@@ -11,7 +19,7 @@ Feature: Create posts
     # However, for now there's no auth, so we just allow posters to identify
     # themselves free-form.
     Given I'm not authenticated
-    When I make a new post
+    When I start a conversation
     Then My new post is created
     And The author display name is "Anonymous Coward"
 
@@ -21,6 +29,6 @@ Feature: Create posts
     # looking up the user in the context and passing in the correct
     # authorDisplayName.
     Given I'm authenticated as test-user-1-justin
-    When I make a new post
+    When I start a conversation
     Then My new post is created
     And The author display name is "Justin Test"

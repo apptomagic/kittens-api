@@ -3,8 +3,10 @@ import os
 import grpc
 import yaml
 from behave import *
-from client.post_pb2 import *
+from client import post_pb2
 from client.post_pb2_grpc import PostsStub
+from client import conversation_pb2
+from client.conversation_pb2_grpc import ConversationsStub
 
 class Stubs(object):
   def __init__(self, context):
@@ -16,6 +18,7 @@ class Stubs(object):
     )
     self.channel = grpc.insecure_channel(address)
     self.posts = PostsStub(self.channel)
+    self.conversations = ConversationsStub(self.channel)
 
   def try_call(self, call, *args, catch_error=False):
     metadata = []
@@ -46,12 +49,12 @@ def before_all(context):
         if 'posts' in ctx['data']:
           posts = []
           for data in ctx['data']['posts']:
-            post = Post(
+            post = post_pb2.Post(
               id = data['id'],
               text = data['text'],
               authorId = data['authorId'],
               authorDisplayName = data['authorDisplayName'],
-              conversationTitle = data.get('conversationTitle'),
+              conversationId = data.get('conversationId'),
               inReplyTo = data.get('inReplyTo')
             )
             if 'created' in data:
@@ -59,9 +62,23 @@ def before_all(context):
             if 'updated' in data:
               post.updated.FromJsonString(data['updated'])
             posts.append(post)
-          context.stubs.posts.SetupContext(SetupContextRequest(
+          context.stubs.posts.SetupContext(post_pb2.SetupContextRequest(
             name = ctx['name'],
             posts = posts
+          ))
+        if 'conversations' in ctx['data']:
+          conversations = []
+          for data in ctx['data']['conversations']:
+            conversation = conversation_pb2.Conversation(
+              id = data['id'],
+              title = data['title'],
+              opId = data['opId'],
+              topics = data['topics'],
+            )
+            conversations.append(conversation)
+          context.stubs.conversations.SetupContext(conversation_pb2.SetupContextRequest(
+            name = ctx['name'],
+            conversations = conversations
           ))
 
 @fixture

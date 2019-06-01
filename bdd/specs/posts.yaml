@@ -70,7 +70,7 @@ contexts:
       conversations:
       - id: test-convo-1-foo
         title: Foo
-        op: test-post-1
+        opId: test-post-1
         topics:
         - testing
         - foo
@@ -97,7 +97,7 @@ contexts:
       conversations:
       - id: test-convo-1-foo
         title: Foo
-        op: test-post-1
+        opId: test-post-1
         topics:
         - testing
         - foo
