@@ -17,7 +17,7 @@ class Stubs(object):
     self.channel = grpc.insecure_channel(address)
     self.posts = PostsStub(self.channel)
 
-  def try_call(self, call, *args):
+  def try_call(self, call, *args, catch_error=False):
     metadata = []
     # print('using contexts:', [ctx['name'] for ctx in self.context.active_contexts[-1]])
     if self.context.active_contexts[-1]:
@@ -28,7 +28,10 @@ class Stubs(object):
     try:
       self.call_res = call(*args, metadata=metadata)
     except grpc.RpcError as e:
-      self.call_exc = e
+      if catch_error:
+        self.call_exc = e
+      else:
+        raise e
 
 def before_all(context):
   context.stubs = Stubs(context)

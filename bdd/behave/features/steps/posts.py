@@ -7,7 +7,8 @@ from client.post_pb2 import *
 def step_impl(context):
   context.stubs.try_call(
     context.stubs.posts.Create,
-    CreatePostRequest(text = 'foo')
+    CreatePostRequest(text = 'foo'),
+    catch_error = True,
   )
 
 
@@ -15,7 +16,7 @@ def step_impl(context):
 def step_impl(context):
   assert hasattr(context.stubs, 'call_exc')
   assert context.stubs.call_exc.code() == grpc.StatusCode.INVALID_ARGUMENT
-  assert context.stubs.call_exc.details() == "Replies need inReplyTo, OPs need conversationTitle"
+  assert context.stubs.call_exc.details() == "Replies need inReplyTo, OPs need conversationId"
 
 
 @when(u'I make a new post and don\'t provide an author name')
@@ -24,8 +25,9 @@ def step_impl(context):
     context.stubs.posts.Create,
     CreatePostRequest(
       text = 'foo',
-      conversationTitle = 'Foo'
-    ))
+      inReplyTo = 'test-post-1',
+    ),
+  )
 
 
 @then(u'My new post is created')
@@ -58,8 +60,8 @@ def step_impl(context):
     context.stubs.posts.Create,
     CreatePostRequest(
       text = 'foo',
-      conversationTitle = 'Foo',
-      authorDisplayName = context.auth_user['displayName']
+      authorDisplayName = context.auth_user['displayName'],
+      inReplyTo = 'test-post-1',
     ))
 
 

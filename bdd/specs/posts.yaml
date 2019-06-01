@@ -60,6 +60,27 @@ specs:
     - I get 3 posts
 
 contexts:
+  - name: minimal
+    data:
+      users:
+      - id: test-user-1-justin
+        displayName: Justin Test
+      conversations:
+      - id: test-convo-1-foo
+        title: Foo
+        op: test-post-1
+        topics:
+        - testing
+        - foo
+      posts:
+      - id: test-post-1
+        conversation: test-convo-1-foo
+        text: foo
+        authorId: test-user-1-justin
+        authorDisplayName: Justin Test
+        conversationId: test-convo-1-foo
+        created: '2019-05-30T16:01:50.223143Z'
+        updated: '2019-05-30T16:01:50.223143Z'
   - name: simple conversation
     data:
       users:
@@ -84,7 +105,7 @@ contexts:
         text: foo
         authorId: test-user-1-justin
         authorDisplayName: Justin Test
-        conversationTitle: test
+        conversationId: test-convo-1-foo
         created: '2019-05-30T16:01:50.223143Z'
         updated: '2019-05-30T16:01:50.223143Z'
       - id: test-post-2
