@@ -61,26 +61,3 @@ def step_impl(context):
     context.stubs.conversations.Create,
     req,
   )
-
-
-@when(u'I fetch the conversation thread from {conversationId} after {postId2}')
-def step_impl(context, conversationId, postId2):
-  context.stubs.try_call(
-    context.stubs.conversations.Thread,
-    ThreadRequest(conversationId = conversationId, after = postId2),
-  )
-
-
-@when(u'I fetch the conversation thread from {conversationId} since {timestamp}')
-def step_impl(context, conversationId, timestamp):
-  req = ThreadRequest(conversationId = conversationId)
-  req.since.FromJsonString(timestamp)
-  context.stubs.try_call(context.stubs.conversations.Thread, req)
-
-
-@when(u'I fetch the conversation thread from {conversationId}')
-def step_impl(context, conversationId):
-  context.stubs.try_call(
-    context.stubs.conversations.Thread,
-    ThreadRequest(conversationId = conversationId)
-  )

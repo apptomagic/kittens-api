@@ -49,6 +49,16 @@ message ThreadRequest {
   google.protobuf.Timestamp since = 5;
 }
 
+message ConversationRequest {
+  string conversationId = 1;
+  // Keep them streaming until the call disconnects
+  bool watch = 2;
+  // Only posts newer than the given id:
+  string after = 3;
+  // Only posts from (inclusive) a date onwards:
+  google.protobuf.Timestamp since = 4;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // admin/testing APIs
 // these should be controlled with strict ACLs
@@ -68,6 +78,8 @@ service Posts {
   rpc PostsByUser (PostsByUserRequest) returns (stream Post);
   // A post and all its replies
   rpc Thread (ThreadRequest) returns (stream Post);
+  // All posts in a conversation
+  rpc Conversation (ConversationRequest) returns (stream Post);
   ////////////////////////////////////////////////////////////////////////
   // admin/testing
   rpc SetupContext (SetupContextRequest) returns (google.protobuf.Empty);

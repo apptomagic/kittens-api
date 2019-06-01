@@ -115,6 +115,7 @@ contexts:
         text: bar
         authorId: test-user-2-bob
         authorDisplayName: Bob Yorankel
+        conversationId: test-convo-1-foo
         inReplyTo: test-post-1
         created: '2019-05-30T16:03:12.308663Z'
         updated: '2019-05-30T16:03:12.308663Z'
@@ -123,6 +124,7 @@ contexts:
         text: piyo
         authorId: test-user-3-faye
         authorDisplayName: Faye Keyoosa
+        conversationId: test-convo-1-foo
         inReplyTo: test-post-1
         created: '2019-05-30T16:03:45.376519Z'
         updated: '2019-05-30T16:03:45.376519Z'
@@ -131,6 +133,7 @@ contexts:
         text: quux
         authorId: test-user-1-justin
         authorDisplayName: Justin Test
+        conversationId: test-convo-1-foo
         inReplyTo: test-post-2
         created: '2019-05-30T16:08:08.443389Z'
         updated: '2019-05-30T16:08:08.443389Z'
@@ -139,6 +142,7 @@ contexts:
         text: hoge
         authorId: test-user-4-anne
         authorDisplayName: Anne Onymous
+        conversationId: test-convo-1-foo
         inReplyTo: test-post-1
         created: '2019-05-30T16:09:09.612543Z'
         updated: '2019-05-30T16:09:09.612543Z'
@@ -147,6 +151,7 @@ contexts:
         text: fnord
         authorId: test-user-1-justin
         authorDisplayName: Justin Test
+        conversationId: test-convo-1-foo
         inReplyTo: test-post-5
         created: '2019-05-30T16:11:50.686769Z'
         updated: '2019-05-30T16:11:50.686769Z'
@@ -155,6 +160,7 @@ contexts:
         text: thing
         authorId: test-user-2-bob
         authorDisplayName: Bob Yorankel
+        conversationId: test-convo-1-foo
         inReplyTo: test-post-5
         created: '2019-05-30T16:11:52.827983Z'
         updated: '2019-05-30T16:11:52.827983Z'
