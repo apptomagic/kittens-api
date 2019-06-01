@@ -17,6 +17,7 @@ specs:
       of the actual product later, as we plan to require login before posting.
       However, for now there's no auth, so we just allow posters to identify
       themselves free-form.
+    contexts: minimal
     when:
     - I make a new post and don't provide an author name
     then:
@@ -27,13 +28,14 @@ specs:
       Since there's no auth yet, this is currently faked by the test suite by
       looking up the user in the context and passing in the correct
       authorDisplayName.
+    contexts: minimal
     given:
-    - I'm authenticated as test-user-2-bob
+    - I'm authenticated as test-user-1-justin
     when:
     - I make a new post
     then:
     - My new post is created
-    - The author display name is "Bob Yorankel"
+    - The author display name is "Justin Test"
 - feature: fetch posts
   contexts:
   - simple conversation
@@ -55,7 +57,7 @@ specs:
     - I get 4 posts
   - name: fetch by date
     when:
-    - I fetch the thread from test-post-1 since 2019-05-30T16:11:50
+    - I fetch the thread from test-post-1 since 2019-05-30T16:09:09Z
     then:
     - I get 3 posts
 
