@@ -7,6 +7,8 @@ from client import post_pb2
 from client.post_pb2_grpc import PostsStub
 from client import conversation_pb2
 from client.conversation_pb2_grpc import ConversationsStub
+from client import topic_pb2
+from client.topic_pb2_grpc import TopicsStub
 
 class Stubs(object):
   def __init__(self, context):
@@ -19,6 +21,7 @@ class Stubs(object):
     self.channel = grpc.insecure_channel(address)
     self.posts = PostsStub(self.channel)
     self.conversations = ConversationsStub(self.channel)
+    self.topics = TopicsStub(self.channel)
 
   def try_call(self, call, *args, catch_error=False):
     metadata = []
