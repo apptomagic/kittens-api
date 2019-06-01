@@ -8,7 +8,7 @@ specs:
   scenarios:
   - name: data is required
     when:
-    - I make a new post with no title and which is not a reply
+    - I make a post without a conversation
     then:
     - It fails, telling me I must provide more data
   - name: Anonymous posting

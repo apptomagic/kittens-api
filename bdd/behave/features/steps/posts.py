@@ -3,7 +3,7 @@ from behave import given, when, then
 import grpc
 from client.post_pb2 import *
 
-@when(u'I make a new post with no title and which is not a reply')
+@when(u'I make a post without a conversation')
 def step_impl(context):
   context.stubs.try_call(
     context.stubs.posts.Create,
@@ -16,7 +16,7 @@ def step_impl(context):
 def step_impl(context):
   assert hasattr(context.stubs, 'call_exc')
   assert context.stubs.call_exc.code() == grpc.StatusCode.INVALID_ARGUMENT
-  assert context.stubs.call_exc.details() == "Replies need inReplyTo, OPs need conversationId"
+  assert context.stubs.call_exc.details() == "Posts need conversationId"
 
 
 @when(u'I make a new post and don\'t provide an author name')

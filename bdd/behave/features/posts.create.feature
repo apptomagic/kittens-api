@@ -1,7 +1,7 @@
 Feature: Create posts
 
   Scenario: data is required
-    When I make a new post with no title and which is not a reply
+    When I make a post without a conversation
     Then It fails, telling me I must provide more data
 
   @use-contexts.minimal
