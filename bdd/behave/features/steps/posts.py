@@ -13,6 +13,16 @@ def step_impl(context):
   )
 
 
+@when(u'I make a post without text')
+def step_impl(context):
+  context.try_type = 'Posts'
+  context.stubs.try_call(
+    context.stubs.posts.Create,
+    CreatePostRequest(inReplyTo = 'test-post-1'),
+    catch_error = True,
+  )
+
+
 @when(u'I make a new post and don\'t provide an author name')
 def step_impl(context):
   context.stubs.try_call(

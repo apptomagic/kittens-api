@@ -1,8 +1,12 @@
 Feature: Create posts
 
-  Scenario: data is required
+  Scenario: conversation is required
     When I make a post without a conversation
-    Then It fails, telling me I must provide more data
+    Then It fails, telling me I must provide a conversationId
+
+  Scenario: text is required
+    When I make a post without text
+    Then It fails, telling me I must provide text
 
   @use-contexts.minimal
   Scenario: Anonymous posting
