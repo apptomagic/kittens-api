@@ -36,6 +36,7 @@ def step_impl(context):
 
 @then(u'My new post is created')
 def step_impl(context):
+  assert not context.stubs.call_exc, context.stubs.call_exc
   if context.try_type == 'Posts':
     assert isinstance(context.stubs.call_res, Post)
     context.new_post = context.stubs.call_res
@@ -43,6 +44,11 @@ def step_impl(context):
     assert hasattr(context.stubs.call_res, 'op')
     assert isinstance(context.stubs.call_res.op, Post)
     context.new_post = context.stubs.call_res.op
+
+
+@then(u'The author id is "{authorId}"')
+def step_impl(context, authorId):
+  assert context.new_post.authorId == authorId
 
 
 @then(u'The author display name is "{authorDisplayName}"')
@@ -56,10 +62,8 @@ def step_impl(context):
     text = 'foo',
     inReplyTo = 'test-post-1',
   )
-  if getattr(context, 'auth_user', None):
-    req.authorDisplayName = context.auth_user['displayName']
   context.try_type = 'Posts'
-  context.stubs.try_call(context.stubs.posts.Create, req)
+  context.stubs.try_call(context.stubs.posts.Create, req, catch_error=True)
 
 
 @when(u'I fetch all posts by {userId}')

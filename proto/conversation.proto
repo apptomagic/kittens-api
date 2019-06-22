@@ -20,11 +20,8 @@ message Conversation {
 
 message CreateConversationRequest {
   string title = 1;
-  // string authorId = 2;
-  // TODO this is temporary until we have proper auth
-  string authorDisplayName = 902;
-  repeated string topics = 3;
-  string text = 4;
+  repeated string topics = 2;
+  string text = 3;
 }
 
 message ConversationAndOP {

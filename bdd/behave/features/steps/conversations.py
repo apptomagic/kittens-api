@@ -54,12 +54,11 @@ def step_impl(context):
     topics = ['foo'],
     text = 'Foo Bar',
   )
-  if getattr(context, 'auth_user', None):
-    req.authorDisplayName = context.auth_user['displayName']
   context.try_type = 'Conversations'
   context.stubs.try_call(
     context.stubs.conversations.Create,
     req,
+    catch_error = True
   )
 
 

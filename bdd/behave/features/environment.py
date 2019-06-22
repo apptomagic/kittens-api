@@ -1,4 +1,5 @@
 import glob
+import json
 import os
 import grpc
 import yaml
@@ -25,12 +26,19 @@ class Stubs(object):
 
   def try_call(self, call, *args, catch_error=False):
     metadata = []
+    self.call_exc = self.call_res = None
     # print('using contexts:', [ctx['name'] for ctx in self.context.active_contexts[-1]])
     if self.context.active_contexts[-1]:
       metadata.append((
         'use-data-contexts',
         '+'.join(ctx['name'] for ctx in self.context.active_contexts[-1])
         ))
+    user = getattr(self.context, 'auth_user', None)
+    if user:
+      metadata.append((
+        'authenticated-user',
+        json.dumps(user)
+      ))
     try:
       self.call_res = call(*args, metadata=metadata)
     except grpc.RpcError as e:
@@ -83,6 +91,7 @@ def before_all(context):
             name = ctx['name'],
             conversations = conversations
           ))
+
 
 @fixture
 def context_activator(context, contexts):

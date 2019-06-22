@@ -6,28 +6,29 @@ description: >
 specs:
 - feature: create posts
   scenarios:
-  - name: data is required
+  - name: conversation is required
+    given:
+    - I'm authenticated as test-user-1-justin
     when:
     - I make a post without a conversation
     then:
-    - It fails, telling me I must provide more data
-  - name: Anonymous posting
-    notes: >
-      This scenario is specific to the current prototype, and will not be part
-      of the actual product later, as we plan to require login before posting.
-      However, for now there's no auth, so we just allow posters to identify
-      themselves free-form.
-    contexts: minimal
+    - It fails, telling me I must provide a conversationId
+  - name: text is required
+    given:
+    - I'm authenticated as test-user-1-justin
     when:
-    - I make a new post and don't provide an author name
+    - I make a post without text
     then:
-    - My new post is created
-    - The author display name is "Anonymous Coward"
+    - It fails, telling me I must provide text
+  - name: Anonymous posting fails
+    contexts: minimal
+    given:
+    - I'm not authenticated
+    when:
+    - I make a new post
+    then:
+    - It fails, telling me I must log in
   - name: Identified posting
-    notes: >
-      Since there's no auth yet, this is currently faked by the test suite by
-      looking up the user in the context and passing in the correct
-      authorDisplayName.
     contexts: minimal
     given:
     - I'm authenticated as test-user-1-justin
@@ -35,6 +36,7 @@ specs:
     - I make a new post
     then:
     - My new post is created
+    - The author id is "test-user-1-justin"
     - The author display name is "Justin Test"
 - feature: fetch posts
   contexts:
